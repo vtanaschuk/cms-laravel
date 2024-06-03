@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
             TeacherSeeder::class,
             RoomSeeder::class,
             EventSeeder::class,
-
+            UserSeeder::class,
         ]);
     }
 }
