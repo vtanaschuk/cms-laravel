@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -48,12 +49,27 @@ class AuthController extends Controller
 
         $url = URL::temporarySignedRoute(
             'verification.verify',
-            now()->addMinutes(60), 
+            now()->addMinutes(60),
             ['id' => $user->getKey(), 'hash' => sha1($user->getEmailForVerification())]
         );
-
+        dd($url);
         Mail::to($user->email)->send(new EmailVerification($url));
 
         return redirect('/')->with('status', 'Registration successful. Please check your email to verify your account.');
+    }
+    public function verify(EmailVerificationRequest $request)
+    {
+        $request->fulfill();
+        dd($request);
+
+        // $request = new EmailVerificationRequest($id, $hash); // Create verification request
+        // dd($request->hasValidSignature());
+
+        // if ($request->hasValidSignature()) {
+        //     $request->fulfill(); // Verify the email address
+        //     return redirect('/home'); // Redirect to home page after successful verification
+        // }
+
+        // return redirect('/verification/error'); // Redirect to error page on invalid verification
     }
 }
