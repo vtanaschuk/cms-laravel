@@ -61,15 +61,5 @@ class AuthController extends Controller
     {
         $request->fulfill();
         dd($request);
-
-        // $request = new EmailVerificationRequest($id, $hash); // Create verification request
-        // dd($request->hasValidSignature());
-
-        // if ($request->hasValidSignature()) {
-        //     $request->fulfill(); // Verify the email address
-        //     return redirect('/home'); // Redirect to home page after successful verification
-        // }
-
-        // return redirect('/verification/error'); // Redirect to error page on invalid verification
     }
 }
